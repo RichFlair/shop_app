@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/screens/product_overview_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const ProductOverviewScreen(),
     );
   }
 }
@@ -30,7 +31,9 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('MyShop'),
       ),
-      body: const Center(child: Text('Let\'s build a shop'),),
+      body: const Center(
+        child: Text('Let\'s build a shop'),
+      ),
     );
   }
 }
