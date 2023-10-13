@@ -44,7 +44,6 @@ class ProductOverviewScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('MyShop'),
       ),
       body: GridView.builder(

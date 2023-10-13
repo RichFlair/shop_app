@@ -9,31 +9,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'MyShop',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.pink,
-        ),
-        useMaterial3: true,
-      ),
+      theme: myTheme,
       home: const ProductOverviewScreen(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('MyShop'),
-      ),
-      body: const Center(
-        child: Text('Let\'s build a shop'),
-      ),
-    );
-  }
-}
+// Theme
+final myTheme = ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Colors.purple,
+    secondary: Colors.deepOrange,
+  ),
+  useMaterial3: true,
+  fontFamily: 'Lato',
+  textTheme: textTheme,
+  appBarTheme: appBarTheme,
+);
+// AppBar theme
+final appBarTheme = AppBarTheme(
+  color: Colors.deepPurple,
+  titleTextStyle: textTheme.titleLarge,
+);
+// Text theme
+const textTheme = TextTheme(
+  titleLarge: TextStyle(
+    fontFamily: 'Lato',
+    color: Colors.white,
+    fontWeight: FontWeight.w700,
+    fontSize: 24,
+  ),
+);
