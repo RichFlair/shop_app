@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '/screens/product_detail_screen.dart';
+
 class ProductItem extends StatelessWidget {
   final String id;
   final String title;
-  final String description;
   final String imageUrl;
 
   const ProductItem({
     super.key,
     required this.id,
     required this.title,
-    required this.description,
     required this.imageUrl,
   });
 
@@ -38,9 +38,13 @@ class ProductItem extends StatelessWidget {
             ),
           ),
         ),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
+        child: GestureDetector(
+          onTap: () =>
+              Navigator.of(context).pushNamed(ProductDetailScreen.routName, arguments: id),
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

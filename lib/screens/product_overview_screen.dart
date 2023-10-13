@@ -58,7 +58,6 @@ class ProductOverviewScreen extends StatelessWidget {
           return ProductItem(
               id: loadedProducts[index].id,
               title: loadedProducts[index].title,
-              description: loadedProducts[index].description,
               imageUrl: loadedProducts[index].imageUrl);
         },
         itemCount: loadedProducts.length,
