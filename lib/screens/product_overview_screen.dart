@@ -12,7 +12,7 @@ class ProductOverviewScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('MyShop'),
       ),
-      body: GridViewBuilder(),
+      body: const GridViewBuilder(),
     );
   }
 }

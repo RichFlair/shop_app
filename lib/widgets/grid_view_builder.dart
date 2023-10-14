@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/providers/product_model.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products_provider.dart';
@@ -22,10 +23,14 @@ class GridViewBuilder extends StatelessWidget {
         mainAxisSpacing: 12,
       ),
       itemBuilder: (context, index) {
-        return ProductItem(
-            id: products[index].id,
-            title: products[index].title,
-            imageUrl: products[index].imageUrl);
+        return ChangeNotifierProvider(
+          create: (context) => products[index],
+          child: const ProductItem(
+              // id: products[index].id,
+              // title: products[index].title,
+              // imageUrl: products[index].imageUrl,
+              ),
+        );
       },
       itemCount: products.length,
     );
