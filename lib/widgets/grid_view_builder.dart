@@ -22,8 +22,8 @@ class GridViewBuilder extends StatelessWidget {
         mainAxisSpacing: 12,
       ),
       itemBuilder: (context, index) {
-        return ChangeNotifierProvider(
-          create: (context) => products[index],
+        return ChangeNotifierProvider.value(
+          value: products[index],
           child: const ProductItem(
               // id: products[index].id,
               // title: products[index].title,
