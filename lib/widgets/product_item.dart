@@ -18,18 +18,20 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productItem = Provider.of<Product>(context);
+    final productItem = Provider.of<Product>(context, listen: false);
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(12),
       child: GridTile(
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            onPressed: () => productItem.changeFavorite(),
-            icon: Icon(
-              productItem.isfavorite ? Icons.favorite : Icons.favorite_border,
-              color: Theme.of(context).colorScheme.secondary,
+          leading: Consumer<Product>(
+            builder: (context, product, child) => IconButton(
+              onPressed: () => product.changeFavorite(),
+              icon: Icon(
+                product.isfavorite ? Icons.favorite : Icons.favorite_border,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
             ),
           ),
           title: Text(productItem.title),
