@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/providers/cart.dart';
+import 'package:my_shop/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 import '/providers/products_provider.dart';
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
         theme: myTheme,
         home: const ProductOverviewScreen(),
         routes: {
-          ProductDetailScreen.routName: (context) => const ProductDetailScreen()
+          ProductDetailScreen.routName: (context) =>
+              const ProductDetailScreen(),
+          CartScreen.routName: (context) => const CartScreen(),
         },
       ),
     );
@@ -56,8 +59,8 @@ final appBarTheme = AppBarTheme(
 const textTheme = TextTheme(
   titleLarge: TextStyle(
     fontFamily: 'Lato',
-    color: Colors.white,
+    // color: Colors.white,
     fontWeight: FontWeight.w700,
-    fontSize: 24,
+    fontSize: 22,
   ),
 );

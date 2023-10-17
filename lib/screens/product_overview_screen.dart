@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/screens/cart_screen.dart';
 
 import '../providers/cart.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,10 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
     // final productData = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
         title: const Text('MyShop'),
         actions: [
           Consumer<Cart>(
@@ -32,7 +37,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               );
             },
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routName);
+              },
               icon: const Icon(Icons.shopping_cart),
             ),
           ),
