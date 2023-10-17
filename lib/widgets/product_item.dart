@@ -18,7 +18,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productItem = Provider.of<Product>(context, listen: false);
+    final productItem = Provider.of<Product>(context);
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(12),
@@ -26,7 +26,7 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
-            builder: (context, product, child) => IconButton(
+            builder: (context, product, _) => IconButton(
               onPressed: () => product.changeFavorite(),
               icon: Icon(
                 product.isfavorite ? Icons.favorite : Icons.favorite_border,

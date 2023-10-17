@@ -38,12 +38,27 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  var isFavourites = false;
+
   Product getProductId(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
   List<Product> get items {
+    if (isFavourites) {
+      return _items.where((element) => element.isfavorite == true).toList();
+    }
     return [..._items];
+  }
+
+  void showFavourites() {
+    isFavourites = true;
+    notifyListeners();
+  }
+
+  void showAll() {
+    isFavourites = false;
+    notifyListeners();
   }
 
   void addProduct() {

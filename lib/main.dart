@@ -42,6 +42,7 @@ final myTheme = ThemeData(
 final appBarTheme = AppBarTheme(
   color: Colors.deepPurple,
   titleTextStyle: textTheme.titleLarge,
+  foregroundColor: Colors.white,
 );
 // Text theme
 const textTheme = TextTheme(
