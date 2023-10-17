@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../providers/cart.dart';
+import 'package:provider/provider.dart';
+import '/widgets/cart_badge.dart';
 import '../widgets/grid_view_builder.dart';
 
 enum SelectedValue { favorites, all }
@@ -20,6 +23,19 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       appBar: AppBar(
         title: const Text('MyShop'),
         actions: [
+          Consumer<Cart>(
+            builder: (_, cart, ch) {
+              return CartBadge(
+                value: cart.cartItemsCount.toString(),
+                color: Theme.of(context).colorScheme.secondary,
+                child: ch!,
+              );
+            },
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.shopping_cart),
+            ),
+          ),
           PopupMenuButton(
             onSelected: (value) {
               setState(() {

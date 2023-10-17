@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Badge extends StatelessWidget {
+class CartBadge extends StatelessWidget {
   final Widget child;
   final String value;
   final Color color;
 
-  const Badge({
+  const CartBadge({
     super.key,
     required this.value,
     required this.color,
