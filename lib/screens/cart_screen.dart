@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
+import '../widgets/cart_item.dart' as display_cart_item;
 
 class CartScreen extends StatelessWidget {
   static const routName = '/cart_screen';
@@ -14,30 +15,46 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Cart'),
       ),
-      body: Column(children: [
-        Card(
-          margin: const EdgeInsets.all(10),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(children: [
-              Text(
-                'Total',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const Spacer(),
-              Chip(
-                label: Text(
-                  cart.totalAmount.toString(),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('ORDER NOW'),
-              ),
-            ]),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return display_cart_item.CartItem(
+                    title: cart.items.values.toList()[index].title,
+                    price: cart.items.values.toList()[index].price,
+                    quantity: cart.items.values.toList()[index].quantiy,
+                  );
+                },
+                itemCount: cart.cartItemsCount),
           ),
-        )
-      ]),
+          const SizedBox(height: 10),
+          Card(
+            margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Total',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const Spacer(),
+                  Chip(
+                    label: Text(
+                      '\$${cart.totalAmount}',
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('ORDER NOW'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
