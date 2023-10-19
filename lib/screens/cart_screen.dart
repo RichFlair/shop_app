@@ -17,18 +17,6 @@ class CartScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return display_cart_item.CartItem(
-                    title: cart.items.values.toList()[index].title,
-                    price: cart.items.values.toList()[index].price,
-                    quantity: cart.items.values.toList()[index].quantiy,
-                  );
-                },
-                itemCount: cart.cartItemsCount),
-          ),
-          const SizedBox(height: 10),
           Card(
             margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Padding(
@@ -52,6 +40,20 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return display_cart_item.CartItem(
+                    id: cart.items.values.toList()[index].id,
+                    title: cart.items.values.toList()[index].title,
+                    productId: cart.items.keys.toList()[index],
+                    price: cart.items.values.toList()[index].price,
+                    quantity: cart.items.values.toList()[index].quantiy,
+                  );
+                },
+                itemCount: cart.cartItemsCount),
           ),
         ],
       ),
