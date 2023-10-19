@@ -38,6 +38,11 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void clearCart() {
+    _items = {};
+    notifyListeners();
+  }
+
   void addCartItems(
     String productId,
     String title,
