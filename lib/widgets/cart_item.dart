@@ -36,6 +36,7 @@ class CartItem extends StatelessWidget {
         child: const Icon(
           Icons.delete,
           color: Colors.white,
+          size: 30,
         ),
       ),
       child: Card(
