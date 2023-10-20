@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/orders.dart';
+import '../widgets/drawer.dart';
 import '../widgets/order_item.dart' as order;
 
 class OrdersScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class OrdersScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Orders'),
       ),
+      drawer: const DrawerWidget(),
       body: ListView.builder(
         itemBuilder: (context, index) {
           return orderData.orders.isEmpty
