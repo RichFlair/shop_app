@@ -31,12 +31,12 @@ class CartScreen extends StatelessWidget {
                   const Spacer(),
                   Chip(
                     label: Text(
-                      '\$${cart.totalAmount}',
+                      '\$${cart.totalAmount.toStringAsFixed(2)}',
                     ),
                   ),
                   TextButton(
                     onPressed: () {
-                      Provider.of<Orders>(context).addOrder(
+                      Provider.of<Orders>(context, listen: false).addOrder(
                         cart.items.values.toList(),
                         cart.totalAmount,
                       );

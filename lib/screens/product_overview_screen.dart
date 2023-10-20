@@ -3,6 +3,7 @@ import 'package:my_shop/screens/cart_screen.dart';
 
 import '../providers/cart.dart';
 import 'package:provider/provider.dart';
+import '../widgets/drawer.dart';
 import '/widgets/cart_badge.dart';
 import '../widgets/grid_view_builder.dart';
 
@@ -22,10 +23,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
     // final productData = Provider.of<Products>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
+        // leading: Drawer(),
         title: const Text('MyShop'),
         actions: [
           Consumer<Cart>(
@@ -71,6 +69,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
+      drawer: const DrawerWidget(),
       body: GridViewBuilder(showFav: _showFavourites),
     );
   }
