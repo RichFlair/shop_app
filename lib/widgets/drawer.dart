@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/screens/orders_screen.dart';
+
+import '../screens/orders_screen.dart';
+import '../screens/user_products_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -44,7 +46,17 @@ class DrawerWidget extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(OrdersScreen.routName);
             },
           ),
-          const Divider()
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.edit),
+            title: const Text('Products'),
+            trailing: const Icon(Icons.forward),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(UserProductsScreen.routName);
+            },
+          ),
+          const Divider(),
         ],
       ),
     );
