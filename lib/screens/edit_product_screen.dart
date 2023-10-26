@@ -31,6 +31,7 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                 decoration: const InputDecoration(
                   label: Text('Price'),
                 ),
+                keyboardType: TextInputType.number,
                 focusNode: _priceFocusNode,
               ),
             ],
