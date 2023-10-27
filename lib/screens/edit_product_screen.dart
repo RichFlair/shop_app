@@ -12,13 +12,28 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
+  final _imageUrlFocusNode = FocusNode();
 
   @override
   void dispose() {
+    _imageUrlFocusNode.removeListener(_updateImage);
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageUrlController.dispose();
+    _imageUrlFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _imageUrlFocusNode.addListener(_updateImage);
+    super.initState();
+  }
+
+  void _updateImage() {
+    if (!_imageUrlFocusNode.hasFocus) {
+      setState(() {});
+    }
   }
 
   @override
@@ -81,6 +96,7 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                       decoration: const InputDecoration(labelText: 'Image URL'),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.url,
+                      focusNode: _imageUrlFocusNode,
                       controller: _imageUrlController,
                     ),
                   )
