@@ -15,6 +15,7 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
 
   @override
   void dispose() {
+    _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
     _imageUrlController.dispose();
     super.dispose();
@@ -42,11 +43,15 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                   label: Text('Price'),
                 ),
                 keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
                 focusNode: _priceFocusNode,
+                onFieldSubmitted: (value) =>
+                    FocusScope.of(context).requestFocus(_descriptionFocusNode),
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Description'),
                 keyboardType: TextInputType.multiline,
+                focusNode: _descriptionFocusNode,
                 maxLines: 3,
               ),
               Row(
@@ -57,22 +62,23 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1, color: Colors.grey),
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
                     ),
                     child: _imageUrlController.text.isEmpty
                         ? const Center(child: Text('Input image URl'))
                         : FittedBox(
-                            fit: BoxFit.contain,
                             child: Image.network(
                               _imageUrlController.text,
+                              fit: BoxFit.contain,
                             ),
                           ),
                   ),
                   Expanded(
                     child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Image URL',
-                      ),
+                      decoration: const InputDecoration(labelText: 'Image URL'),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.url,
                       controller: _imageUrlController,
