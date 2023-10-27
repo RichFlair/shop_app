@@ -47,11 +47,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
   }
 
   void _submitForm() {
+    _form.currentState?.validate();
     _form.currentState?.save();
-    print(_editedProduct.title);
-    print(_editedProduct.price);
-    print(_editedProduct.description);
-    print(_editedProduct.imageUrl);
+    // print(_editedProduct.title);
+    // print(_editedProduct.price);
+    // print(_editedProduct.description);
+    // print(_editedProduct.imageUrl);
   }
 
   @override
@@ -92,6 +93,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
                   );
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a title for your product.';
+                  }
+                  return null;
                 },
               ),
               // price

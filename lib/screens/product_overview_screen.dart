@@ -7,7 +7,10 @@ import '../widgets/drawer.dart';
 import '/widgets/cart_badge.dart';
 import '../widgets/grid_view_builder.dart';
 
-enum SelectedValue { favorites, all }
+enum SelectedValue {
+  favorites,
+  all,
+}
 
 class ProductOverviewScreen extends StatefulWidget {
   const ProductOverviewScreen({super.key});
