@@ -47,12 +47,15 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
   }
 
   void _submitForm() {
-    _form.currentState?.validate();
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState?.save();
-    // print(_editedProduct.title);
-    // print(_editedProduct.price);
-    // print(_editedProduct.description);
-    // print(_editedProduct.imageUrl);
+    print(_editedProduct.title);
+    print(_editedProduct.price);
+    print(_editedProduct.description);
+    print(_editedProduct.imageUrl);
   }
 
   @override
@@ -121,6 +124,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                     imageUrl: _editedProduct.imageUrl,
                   );
                 },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a price for your product.';
+                  }
+                  return null;
+                },
               ),
               //description
               TextFormField(
@@ -136,6 +145,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
                   );
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description for your product.';
+                  }
+                  return null;
                 },
               ),
               Row(
@@ -175,6 +190,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                           price: _editedProduct.price,
                           imageUrl: newValue!,
                         );
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a valid Url for your product.';
+                        }
+                        return null;
                       },
                     ),
                   )
