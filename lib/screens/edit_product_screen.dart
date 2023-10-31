@@ -128,6 +128,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                   if (value!.isEmpty) {
                     return 'Please enter a price for your product.';
                   }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid price for your product';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'The price of your product can\'t be less than 1 ';
+                  }
                   return null;
                 },
               ),
@@ -149,6 +155,9 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a description for your product.';
+                  }
+                  if (value.length < 10) {
+                    return 'Description should be at least 10 characters long';
                   }
                   return null;
                 },
@@ -194,6 +203,10 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter a valid Url for your product.';
+                        }
+                        if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please enter a valid url';
                         }
                         return null;
                       },
