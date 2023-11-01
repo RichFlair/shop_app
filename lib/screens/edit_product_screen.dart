@@ -15,6 +15,7 @@ class EditProdctScreen extends StatefulWidget {
 class _EditProdctScreenState extends State<EditProdctScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  // ignore: prefer_final_fields
   var _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
@@ -128,12 +129,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                 },
                 onSaved: (newValue) {
                   _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: newValue!,
-                    description: _editedProduct.description,
-                    price: _editedProduct.price,
-                    imageUrl: _editedProduct.imageUrl,
-                  );
+                      id: _editedProduct.id,
+                      title: newValue!,
+                      description: _editedProduct.description,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl,
+                      isfavorite: _editedProduct.isfavorite);
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -156,12 +157,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                 },
                 onSaved: (newValue) {
                   _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: _editedProduct.title,
-                    description: _editedProduct.description,
-                    price: double.parse(newValue!),
-                    imageUrl: _editedProduct.imageUrl,
-                  );
+                      id: _editedProduct.id,
+                      title: _editedProduct.title,
+                      description: _editedProduct.description,
+                      price: double.parse(newValue!),
+                      imageUrl: _editedProduct.imageUrl,
+                      isfavorite: _editedProduct.isfavorite);
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -185,12 +186,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                 maxLines: 3,
                 onSaved: (newValue) {
                   _editedProduct = Product(
-                    id: _editedProduct.id,
-                    title: _editedProduct.title,
-                    description: newValue!,
-                    price: _editedProduct.price,
-                    imageUrl: _editedProduct.imageUrl,
-                  );
+                      id: _editedProduct.id,
+                      title: _editedProduct.title,
+                      description: newValue!,
+                      price: _editedProduct.price,
+                      imageUrl: _editedProduct.imageUrl,
+                      isfavorite: _editedProduct.isfavorite);
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -234,12 +235,12 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
                       controller: _imageUrlController,
                       onSaved: (newValue) {
                         _editedProduct = Product(
-                          id: _editedProduct.id,
-                          title: _editedProduct.title,
-                          description: _editedProduct.description,
-                          price: _editedProduct.price,
-                          imageUrl: newValue!,
-                        );
+                            id: _editedProduct.id,
+                            title: _editedProduct.title,
+                            description: _editedProduct.description,
+                            price: _editedProduct.price,
+                            imageUrl: newValue!,
+                            isfavorite: _editedProduct.isfavorite);
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
