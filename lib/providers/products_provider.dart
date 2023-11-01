@@ -87,4 +87,9 @@ class Products with ChangeNotifier {
   bool isAlreadyAdded(String id) {
     return _items.any((element) => element.id == id);
   }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 }
