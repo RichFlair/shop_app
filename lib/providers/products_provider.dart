@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'product_model.dart';
+import 'package:http/http.dart' as http;
+
+import './product_model.dart';
 
 class Products with ChangeNotifier {
   // ignore: prefer_final_fields
@@ -66,6 +70,20 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+    const url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products.json';
+    http.post(
+      Uri.parse(url),
+      body: json.encode(
+        {
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isfavorite': product.isfavorite,
+        },
+      ),
+    );
     final newProduct = Product(
       id: DateTime.now().toString(),
       title: product.title,
