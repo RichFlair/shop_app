@@ -80,7 +80,7 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
     }
   }
 
-  void _submitForm() {
+  Future<void> _submitForm() async {
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
@@ -100,31 +100,34 @@ class _EditProdctScreenState extends State<EditProdctScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                title: const Text('An error occured'),
-                content: const Text('Something went wrong'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                    },
-                    child: const Text('Okay'),
-                  ),
-                ],
-              );
-            }).then((value) {
-          setState(() {
-            _isLoading = false;
-          });
-          Navigator.of(context).pop();
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        if (mounted) {
+          await showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: const Text('An error occured'),
+                  content: const Text('Something went wrong'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                      child: const Text('Okay'),
+                    ),
+                  ],
+                );
+              });
+        }
+      } finally {
+        setState(() {
+          _isLoading = false;
         });
-      });
+        if (mounted) Navigator.of(context).pop();
+      }
     }
   }
 
