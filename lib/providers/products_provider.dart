@@ -70,7 +70,8 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://shop-app-46835-default-rtdb.firebaseio.com/products';
+    const url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products.json';
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -92,7 +93,6 @@ class Products with ChangeNotifier {
       _items.insert(0, newProduct);
       notifyListeners();
     } catch (error) {
-      print(error);
       rethrow;
     }
   }

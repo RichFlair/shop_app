@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/screens/cart_screen.dart';
-
-import '../providers/cart.dart';
 import 'package:provider/provider.dart';
+
+import '../screens/cart_screen.dart';
+import '../providers/cart.dart';
 import '../widgets/drawer.dart';
-import '/widgets/cart_badge.dart';
+import '../widgets/cart_badge.dart';
 import '../widgets/grid_view_builder.dart';
 
 enum SelectedValue {
