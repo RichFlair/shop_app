@@ -119,9 +119,19 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product product) {
+  Future<void> updateProduct(String id, Product product) async {
     final editingProductIndex =
         _items.indexWhere((element) => element.id == id);
+    final url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products/$id.json';
+    await http.patch(Uri.parse(url),
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isfavorite': product.isfavorite,
+        }));
     _items[editingProductIndex] = product;
     notifyListeners();
   }
