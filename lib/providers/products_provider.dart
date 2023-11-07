@@ -97,6 +97,17 @@ class Products with ChangeNotifier {
     }
   }
 
+  Future<void> fetchData() async {
+    const url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      print(json.decode(response.body));
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   void updateProduct(String id, Product product) {
     final editingProductIndex =
         _items.indexWhere((element) => element.id == id);
