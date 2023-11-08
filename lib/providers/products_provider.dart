@@ -141,7 +141,19 @@ class Products with ChangeNotifier {
   }
 
   void deleteProduct(String id) {
-    _items.removeWhere((element) => element.id == id);
+    final url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products/$id.json';
+    final existingProductIndex =
+        _items.indexWhere((element) => element.id == id);
+    Product? existingProduct = _items[existingProductIndex];
+    http.delete(Uri.parse(url)).then((response) {
+      existingProduct = null;
+      print(response.statusCode);
+    }).catchError((error) {
+      _items.insert(existingProductIndex, existingProduct!);
+      notifyListeners();
+    });
+    _items.removeAt(existingProductIndex);
     notifyListeners();
   }
 }
