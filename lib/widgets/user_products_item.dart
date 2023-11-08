@@ -62,9 +62,6 @@ class UserProductsItem extends StatelessWidget {
                     ),
                   );
                 }
-                //  finally {
-
-                // }
               },
               icon: Icon(
                 Icons.delete,
