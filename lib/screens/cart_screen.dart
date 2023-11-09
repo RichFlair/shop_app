@@ -34,16 +34,7 @@ class CartScreen extends StatelessWidget {
                       '\$${cart.totalAmount.toStringAsFixed(2)}',
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<Orders>(context, listen: false).addOrder(
-                        cart.items.values.toList(),
-                        cart.totalAmount,
-                      );
-                      cart.clearCart();
-                    },
-                    child: const Text('ORDER NOW'),
-                  ),
+                  OderButton(cart: cart),
                 ],
               ),
             ),
@@ -64,6 +55,56 @@ class CartScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class OderButton extends StatefulWidget {
+  const OderButton({
+    super.key,
+    required this.cart,
+  });
+
+  final Cart cart;
+
+  @override
+  State<OderButton> createState() => _OderButtonState();
+}
+
+class _OderButtonState extends State<OderButton> {
+  var _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: widget.cart.cartItemsCount < 1
+          ? null
+          : () async {
+              setState(() {
+                _isLoading = true;
+              });
+              try {
+                await Provider.of<Orders>(context, listen: false)
+                    .addOrder(
+                      widget.cart.items.values.toList(),
+                      widget.cart.totalAmount,
+                    )
+                    .then(
+                      (value) => widget.cart.clearCart(),
+                    );
+              } catch (e) {
+                print(e);
+              }
+              setState(() {
+                _isLoading = false;
+              });
+            },
+      child: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            )
+          : const Text('ORDER NOW'),
     );
   }
 }
