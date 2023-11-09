@@ -111,7 +111,8 @@ class Products with ChangeNotifier {
             title: value['title'],
             description: value['description'],
             price: value['price'],
-            imageUrl: value['imageUrl']));
+            imageUrl: value['imageUrl'],
+            isfavorite: value['isfavorite']));
       });
       _items = loadedData;
       notifyListeners();
