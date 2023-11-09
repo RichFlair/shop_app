@@ -19,6 +19,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
     final productItem = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
     return ClipRRect(
@@ -29,7 +30,47 @@ class ProductItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
             builder: (context, product, _) => IconButton(
-              onPressed: () => product.changeFavorite(productItem.id),
+              onPressed: () async {
+                try {
+                  await product
+                      .changeFavorite(
+                    productItem.id,
+                  )
+                      .then((value) {
+                    if (productItem.isfavorite) {
+                      scaffoldMessenger.hideCurrentSnackBar();
+                      scaffoldMessenger.showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Product added to favorites',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+                    if (!productItem.isfavorite) {
+                      scaffoldMessenger.hideCurrentSnackBar();
+                      scaffoldMessenger.showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Product removed from favorites',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+                  });
+                } catch (e) {
+                  scaffoldMessenger.showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'An error occured',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
+              },
               icon: Icon(
                 product.isfavorite ? Icons.favorite : Icons.favorite_border,
                 color: Theme.of(context).colorScheme.secondary,

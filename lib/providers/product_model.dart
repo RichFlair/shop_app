@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/http_exception.dart';
+
 class Product with ChangeNotifier {
   final String id;
   final String title;
@@ -25,12 +27,18 @@ class Product with ChangeNotifier {
         'https://shop-app-46835-default-rtdb.firebaseio.com/products/$id.json';
 
     isfavorite = !isfavorite;
-    await http.patch(
+    notifyListeners();
+    final response = await http.patch(
       Uri.parse(url),
       body: json.encode({
         'isfavorite': isfavorite,
       }),
     );
-    notifyListeners();
+    // print(json.decode(response.body)['isfavorite']);
+    if (response.statusCode >= 400) {
+      isfavorite = !isfavorite;
+      notifyListeners();
+      throw HttpException('Couldnt add to favorites');
+    }
   }
 }
