@@ -92,7 +92,7 @@ class _OderButtonState extends State<OderButton> {
                       (value) => widget.cart.clearCart(),
                     );
               } catch (e) {
-                print(e);
+                // print(e);
               }
               setState(() {
                 _isLoading = false;
