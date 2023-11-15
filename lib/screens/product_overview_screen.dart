@@ -14,6 +14,7 @@ enum SelectedValue {
 }
 
 class ProductOverviewScreen extends StatefulWidget {
+  static const routName = '/product_overview_screen';
   const ProductOverviewScreen({super.key});
 
   @override
