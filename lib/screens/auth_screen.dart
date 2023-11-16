@@ -69,7 +69,7 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  AuthCard()
+                  const AuthCard()
                 ],
               ),
             ),
@@ -92,6 +92,10 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
   var _authScreenStatus = AuthStatus.login;
 
+  void _saveForm() {
+    _formKey.currentState!.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -112,6 +116,13 @@ class _AuthCardState extends State<AuthCard> {
                     TextFormField(
                       decoration: const InputDecoration(labelText: 'E-Mail'),
                       keyboardType: TextInputType.emailAddress,
+                      // onFieldSubmitted: (value) => _saveForm(),
+                      validator: (value) {
+                        if (!value!.contains('@')) {
+                          return 'Invalid email type';
+                        }
+                        return null;
+                      },
                     ),
                     // password textfield
                     TextFormField(
@@ -121,6 +132,22 @@ class _AuthCardState extends State<AuthCard> {
                       obscureText: true,
                       autocorrect: false,
                       controller: _passwordController,
+                      // onFieldSubmitted: (value) => _saveForm(),
+                      validator: (value) {
+                        RegExp regexNumber = RegExp(r"^ (?=.?[0-9]).$");
+                        RegExp regexSpecialChar =
+                            RegExp(r"^ (?=.? [!@#\$&~]).*$");
+                        if (value!.length < 8) {
+                          return 'Password must be 8 characters long';
+                        }
+                        if (!regexNumber.hasMatch(value)) {
+                          return 'Password must have at least one number';
+                        }
+                        if (!regexSpecialChar.hasMatch(value)) {
+                          return 'Password must have at least one special character';
+                        }
+                        return null;
+                      },
                     ),
                     // confirm password textfield
                     if (_authScreenStatus == AuthStatus.signin)
@@ -130,13 +157,22 @@ class _AuthCardState extends State<AuthCard> {
                         ),
                         obscureText: true,
                         autocorrect: false,
+                        // onFieldSubmitted: (value) => _saveForm(),
+                        validator: (value) {
+                          if (value == _passwordController.toString()) {
+                            return 'Password does not match!';
+                          }
+                          return null;
+                        },
                       ),
                     const SizedBox(
                       height: 20,
                     ),
                     // Login or Signup button
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _saveForm();
+                      },
                       child: _authScreenStatus == AuthStatus.login
                           ? const Text('LOGIN')
                           : const Text('SIGN-UP'),
