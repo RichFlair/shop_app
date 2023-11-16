@@ -1,6 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+enum AuthStatus {
+  login,
+  signin,
+}
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/Auth';
@@ -12,6 +15,7 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          // static background container with a gradient
           Container(
             height: screenSize.height,
             width: screenSize.width,
@@ -84,46 +88,82 @@ class AuthCard extends StatefulWidget {
 }
 
 class _AuthCardState extends State<AuthCard> {
+  final _formKey = GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
+  var _authScreenStatus = AuthStatus.login;
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 40),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Form(
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'E-Mail'),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    // e-mail textfield
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'E-Mail'),
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                    obscureText: true,
-                    autocorrect: false,
-                  ),
-                ],
+                    // password textfield
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                      ),
+                      obscureText: true,
+                      autocorrect: false,
+                      controller: _passwordController,
+                    ),
+                    // confirm password textfield
+                    if (_authScreenStatus == AuthStatus.signin)
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Confirm Password',
+                        ),
+                        obscureText: true,
+                        autocorrect: false,
+                      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    // Login or Signup button
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: _authScreenStatus == AuthStatus.login
+                          ? const Text('LOGIN')
+                          : const Text('SIGN-UP'),
+                    ),
+                    // button to switch between login and signup screen
+                    TextButton(
+                      onPressed: () {
+                        if (_authScreenStatus == AuthStatus.login) {
+                          setState(() {
+                            _authScreenStatus = AuthStatus.signin;
+                          });
+                        } else {
+                          setState(() {
+                            _authScreenStatus = AuthStatus.login;
+                          });
+                        }
+                      },
+                      child: _authScreenStatus == AuthStatus.login
+                          ? const Text('Not registered? SIGNUP')
+                          : const Text('Already registered? LOGIN'),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('LOGIN'),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Not registered? SIGNUP'),
-            ),
-            const SizedBox(
-              height: 20,
+              height: 10,
             ),
           ],
         ),
