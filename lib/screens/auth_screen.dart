@@ -116,11 +116,6 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = false;
     });
-    //     .then((value) {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // });
   }
 
   @override
@@ -231,6 +226,9 @@ class _AuthCardState extends State<AuthCard> {
                                 ? const Text('LOGIN')
                                 : const Text('SIGN-UP'),
                           ),
+                    const SizedBox(
+                      height: 3,
+                    ),
                     // button to switch between login and signup screen
                     TextButton(
                       onPressed: () {
