@@ -91,7 +91,7 @@ class _AuthCardState extends State<AuthCard> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   var _authScreenStatus = AuthStatus.login;
-
+  var _isVisible = false;
   void _saveForm() {
     _formKey.currentState!.validate();
   }
@@ -126,17 +126,27 @@ class _AuthCardState extends State<AuthCard> {
                     ),
                     // password textfield
                     TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isVisible = !_isVisible;
+                            });
+                          },
+                          icon: _isVisible
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility),
+                        ),
                         labelText: 'Password',
                       ),
-                      obscureText: true,
+                      obscureText: _isVisible ? false : true,
                       autocorrect: false,
                       controller: _passwordController,
                       // onFieldSubmitted: (value) => _saveForm(),
                       validator: (value) {
-                        RegExp regexNumber = RegExp(r"^ (?=.?[0-9]).$");
+                        RegExp regexNumber = RegExp(r'^(?=.*\d).+$');
                         RegExp regexSpecialChar =
-                            RegExp(r"^ (?=.? [!@#\$&~]).*$");
+                            RegExp(r'^(?=.*[!@#$%^&*(),./?;:<>|{}]).+$');
                         if (value!.length < 8) {
                           return 'Password must be 8 characters long';
                         }
@@ -155,11 +165,14 @@ class _AuthCardState extends State<AuthCard> {
                         decoration: const InputDecoration(
                           labelText: 'Confirm Password',
                         ),
-                        obscureText: true,
+                        obscureText: _isVisible ? false : true,
                         autocorrect: false,
                         // onFieldSubmitted: (value) => _saveForm(),
                         validator: (value) {
-                          if (value == _passwordController.toString()) {
+                          if (value!.isEmpty) {
+                            return 'Enter Password again';
+                          }
+                          if (value != _passwordController.text) {
                             return 'Password does not match!';
                           }
                           return null;
