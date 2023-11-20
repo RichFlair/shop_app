@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 enum AuthStatus {
   login,
@@ -16,7 +18,7 @@ class AuthScreen extends StatelessWidget {
       body: Stack(
         children: [
           // static background container with a gradient
-          Container(
+          SizedBox(
             height: screenSize.height,
             width: screenSize.width,
             child: DecoratedBox(
@@ -92,8 +94,33 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
   var _authScreenStatus = AuthStatus.login;
   var _isVisible = false;
-  void _saveForm() {
-    _formKey.currentState!.validate();
+  var _isLoading = false;
+  Map<String, String> credentials = {
+    'email': '',
+    'password': '',
+  };
+
+  Future<void> _submit() async {
+    var isValidated = _formKey.currentState!.validate();
+    if (!isValidated) {
+      return;
+    }
+    _formKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    await Provider.of<Auth>(context, listen: false).signUp(
+      credentials['email']!,
+      credentials['password']!,
+    );
+    setState(() {
+      _isLoading = false;
+    });
+    //     .then((value) {
+    //   setState(() {
+    //     _isLoading = false;
+    //   });
+    // });
   }
 
   @override
@@ -116,7 +143,9 @@ class _AuthCardState extends State<AuthCard> {
                     TextFormField(
                       decoration: const InputDecoration(labelText: 'E-Mail'),
                       keyboardType: TextInputType.emailAddress,
-                      // onFieldSubmitted: (value) => _saveForm(),
+                      onSaved: (newValue) {
+                        credentials['email'] = newValue!;
+                      },
                       validator: (value) {
                         if (!value!.contains('@')) {
                           return 'Invalid email type';
@@ -142,7 +171,9 @@ class _AuthCardState extends State<AuthCard> {
                       obscureText: _isVisible ? false : true,
                       autocorrect: false,
                       controller: _passwordController,
-                      // onFieldSubmitted: (value) => _saveForm(),
+                      onSaved: (newValue) {
+                        credentials['password'] = newValue!;
+                      },
                       validator: (value) {
                         RegExp regexNumber = RegExp(r'^(?=.*\d).+$');
                         RegExp regexSpecialChar =
@@ -182,14 +213,24 @@ class _AuthCardState extends State<AuthCard> {
                       height: 20,
                     ),
                     // Login or Signup button
-                    ElevatedButton(
-                      onPressed: () {
-                        _saveForm();
-                      },
-                      child: _authScreenStatus == AuthStatus.login
-                          ? const Text('LOGIN')
-                          : const Text('SIGN-UP'),
-                    ),
+                    _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ElevatedButton(
+                            onPressed: () {
+                              _submit();
+                            },
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Theme.of(context).colorScheme.primary),
+                                foregroundColor:
+                                    MaterialStateProperty.all(Colors.white)),
+                            child: _authScreenStatus == AuthStatus.login
+                                ? const Text('LOGIN')
+                                : const Text('SIGN-UP'),
+                          ),
                     // button to switch between login and signup screen
                     TextButton(
                       onPressed: () {
