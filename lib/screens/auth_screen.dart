@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_shop/models/http_exception.dart';
 import 'package:my_shop/providers/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -100,6 +101,26 @@ class _AuthCardState extends State<AuthCard> {
     'password': '',
   };
 
+  void displayErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Something happened'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text('Okay'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _submit() async {
     var isValidated = _formKey.currentState!.validate();
     if (!isValidated) {
@@ -109,26 +130,44 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authScreenStatus == AuthStatus.signin) {
-      await Provider.of<Auth>(context, listen: false)
-          .signUp(
-        credentials['email']!,
-        credentials['password']!,
-      )
-          .then((_) {
-        _formKey.currentState?.reset();
-        _passwordController.clear();
-        setState(() {
-          _authScreenStatus = AuthStatus.login;
+    try {
+      if (_authScreenStatus == AuthStatus.signin) {
+        await Provider.of<Auth>(context, listen: false)
+            .signUp(
+          credentials['email']!,
+          credentials['password']!,
+        )
+            .then((_) {
+          _formKey.currentState?.reset();
+          _passwordController.clear();
+          setState(() {
+            _authScreenStatus = AuthStatus.login;
+          });
         });
-      });
-    } else {
-      await Provider.of<Auth>(context, listen: false)
-          .logIn(
-            credentials['email'],
-            credentials['password'],
-          )
-          .then((value) => print('Logged in'));
+      } else {
+        await Provider.of<Auth>(context, listen: false).logIn(
+          credentials['email'],
+          credentials['password'],
+        );
+      }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication error';
+      if (error.toString() == 'EMAIL_EXISTS') {
+        errorMessage =
+            'The email address is already in use by another account.';
+      } else if (error.toString() == 'EMAIL_NOT_FOUND') {
+        errorMessage =
+            'There is no user record corresponding to this identifier.';
+      } else if (error.toString() == 'INVALID_PASSWORD') {
+        errorMessage = 'The password is invalid';
+      } else if (error.toString() == 'USER_DISABLED') {
+        errorMessage = 'The user account has been disabled';
+      }
+      displayErrorMessage(errorMessage);
+    } catch (e) {
+      var errorMessage =
+          'Oops! An error occured. Check your internet connection';
+      displayErrorMessage(errorMessage);
     }
     setState(() {
       _isLoading = false;
