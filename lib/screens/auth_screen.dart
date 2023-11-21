@@ -109,10 +109,20 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    await Provider.of<Auth>(context, listen: false).signUp(
-      credentials['email']!,
-      credentials['password']!,
-    );
+    if (_authScreenStatus == AuthStatus.signin) {
+      await Provider.of<Auth>(context, listen: false)
+          .signUp(
+        credentials['email']!,
+        credentials['password']!,
+      )
+          .then((_) {
+        _formKey.currentState?.reset();
+        _passwordController.clear();
+        setState(() {
+          _authScreenStatus = AuthStatus.login;
+        });
+      });
+    } else {}
     setState(() {
       _isLoading = false;
     });
