@@ -122,7 +122,14 @@ class _AuthCardState extends State<AuthCard> {
           _authScreenStatus = AuthStatus.login;
         });
       });
-    } else {}
+    } else {
+      await Provider.of<Auth>(context, listen: false)
+          .logIn(
+            credentials['email'],
+            credentials['password'],
+          )
+          .then((value) => print('Logged in'));
+    }
     setState(() {
       _isLoading = false;
     });
