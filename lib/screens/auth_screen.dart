@@ -158,12 +158,12 @@ class _AuthCardState extends State<AuthCard> {
       } else if (error.toString() == 'EMAIL_NOT_FOUND') {
         errorMessage =
             'There is no user record corresponding to this identifier.';
-      } else if (error.toString() == 'INVALID_PASSWORD') {
-        errorMessage = 'The password is invalid. Try again';
+      } else if (error.toString() == 'INVALID_LOGIN_CREDENTIALS') {
+        errorMessage = 'Invalid login credentials. Try again';
       } else if (error.toString() == 'USER_DISABLED') {
         errorMessage = 'The user account has been disabled';
       } else if (error.toString() == 'EMAIL_NOT_FOUND') {
-        errorMessage = 'This email is not a registered';
+        errorMessage = 'This email is not registered';
       } else if (error.toString() == 'TOO_MANY_ATTEMPTS_TRY_LATER') {
         errorMessage = 'Too many attempts, try again later';
       }
