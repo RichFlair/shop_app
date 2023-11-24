@@ -7,7 +7,7 @@ import 'package:my_shop/models/http_exception.dart';
 class Auth with ChangeNotifier {
   String? _token;
   DateTime? _expiryDate;
-  String? _userId;
+  // String? _userId;
 
   bool get isAuth {
     return token != null;
@@ -36,13 +36,13 @@ class Auth with ChangeNotifier {
         }),
       );
       final authData = json.decode(response.body);
-      print(authData);
+      // print(authData);
       if (authData['error'] != null) {
         throw HttpException(authData['error']['message']);
       }
       if (authOption == 'signInWithPassword') {
         _token = authData['idToken'];
-        _userId = authData['localId'];
+        // _userId = authData['localId'];
         _expiryDate = DateTime.now().add(
           Duration(
             seconds: int.parse(authData['expiresIn']),
