@@ -22,6 +22,11 @@ class OrderItem {
 class Orders with ChangeNotifier {
   // ignore: prefer_final_fields
   List<OrderItem> _orders = [];
+  final String? authToken;
+  Orders(
+    this.authToken,
+    this._orders,
+  );
 
   List<OrderItem> get orders {
     return [..._orders];
@@ -56,9 +61,8 @@ class Orders with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    const url =
-        'https://shop-app-46835-default-rtdb.firebaseio.com/orders.json';
-
+    final url =
+        'https://shop-app-46835-default-rtdb.firebaseio.com/orders.json?auth=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       if (json.decode(response.body) == null) {
