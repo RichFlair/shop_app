@@ -7,11 +7,11 @@ import 'package:my_shop/screens/cart_screen.dart';
 import 'package:my_shop/screens/orders_screen.dart';
 import 'package:provider/provider.dart';
 
-import '/providers/products_provider.dart';
 import '/screens/product_overview_screen.dart';
 import '/screens/product_detail_screen.dart';
 import '/screens/user_products_screen.dart';
 import '/screens/edit_product_screen.dart';
+import 'providers/products_provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -25,8 +25,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Products(),
+        ChangeNotifierProxyProvider<Auth, Products>(
+          create: (context) {
+            return Products(
+              '',
+              [],
+            );
+          },
+          update: (ctx, auth, previousProducts) => Products(
+            auth.token,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
@@ -35,20 +44,27 @@ class MyApp extends StatelessWidget {
           value: Orders(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyShop',
-        theme: myTheme,
-        home: const AuthScreen(),
-        routes: {
-          ProductOverviewScreen.routName: (context) =>
-              const ProductOverviewScreen(),
-          ProductDetailScreen.routName: (context) =>
-              const ProductDetailScreen(),
-          CartScreen.routName: (context) => const CartScreen(),
-          OrdersScreen.routName: (context) => const OrdersScreen(),
-          UserProductsScreen.routName: (context) => const UserProductsScreen(),
-          EditProdctScreen.routName: (context) => const EditProdctScreen(),
+      child: Consumer<Auth>(
+        builder: (context, authData, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'MyShop',
+            theme: myTheme,
+            home: authData.isAuth
+                ? const ProductOverviewScreen()
+                : const AuthScreen(),
+            routes: {
+              ProductOverviewScreen.routName: (context) =>
+                  const ProductOverviewScreen(),
+              ProductDetailScreen.routName: (context) =>
+                  const ProductDetailScreen(),
+              CartScreen.routName: (context) => const CartScreen(),
+              OrdersScreen.routName: (context) => const OrdersScreen(),
+              UserProductsScreen.routName: (context) =>
+                  const UserProductsScreen(),
+              EditProdctScreen.routName: (context) => const EditProdctScreen(),
+            },
+          );
         },
       ),
     );
