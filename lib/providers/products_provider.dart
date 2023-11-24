@@ -122,8 +122,7 @@ class Products with ChangeNotifier {
             imageUrl: value['imageUrl'],
             isfavorite: value['isfavorite']));
       });
-      print(authToken);
-      print(json.decode(response.body));
+
       _items = loadedData;
       notifyListeners();
     } catch (error) {
