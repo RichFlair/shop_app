@@ -272,6 +272,7 @@ class _AuthCardState extends State<AuthCard> {
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
+                        // Login / SignUp Button
                         : ElevatedButton(
                             onPressed: () {
                               _submit();

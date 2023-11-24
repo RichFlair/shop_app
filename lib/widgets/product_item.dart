@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/auth.dart';
 import '../providers/cart.dart';
 import '../providers/product_model.dart';
 import '/screens/product_detail_screen.dart';
@@ -19,6 +20,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authToken = Provider.of<Auth>(context).token;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final productItem = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
@@ -35,6 +37,7 @@ class ProductItem extends StatelessWidget {
                   await product
                       .changeFavorite(
                     productItem.id,
+                    authToken,
                   )
                       .then((value) {
                     if (productItem.isfavorite) {
