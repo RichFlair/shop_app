@@ -22,9 +22,10 @@ class Product with ChangeNotifier {
     this.isfavorite = false,
   });
 
-  Future<void> changeFavorite(String id, String? authToken) async {
+  Future<void> changeFavorite(
+      String id, String? authToken, String? userId) async {
     final url =
-        'https://shop-app-46835-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
+        'https://shop-app-46835-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
 
     isfavorite = !isfavorite;
     notifyListeners();

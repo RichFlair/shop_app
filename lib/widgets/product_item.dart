@@ -20,7 +20,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authToken = Provider.of<Auth>(context).token;
+    final auth = Provider.of<Auth>(context);
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     final productItem = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
@@ -37,7 +37,8 @@ class ProductItem extends StatelessWidget {
                   await product
                       .changeFavorite(
                     productItem.id,
-                    authToken,
+                    auth.token,
+                    auth.userId,
                   )
                       .then((value) {
                     if (productItem.isfavorite) {
