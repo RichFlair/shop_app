@@ -46,7 +46,7 @@ class Auth with ChangeNotifier {
       }
       if (authOption == 'signInWithPassword') {
         _token = authData['idToken'];
-        // _userId = authData['localId'];
+        _userId = authData['localId'];
         _expiryDate = DateTime.now().add(
           Duration(
             seconds: int.parse(authData['expiresIn']),
