@@ -44,9 +44,11 @@ class Products with ChangeNotifier {
   ];
 
   final String? authToken;
+  final String? userId;
 
   Products(
     this.authToken,
+    this.userId,
     this._items,
   );
 
@@ -106,21 +108,29 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    final url =
+    var url =
         'https://shop-app-46835-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       final fetchedData = json.decode(response.body) as Map<String, dynamic>;
       // print(fetchedData);
       final List<Product> loadedData = [];
+      url =
+          'https://shop-app-46835-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(Uri.parse(url));
+      final favoriteData = json.decode(favoriteResponse.body);
       fetchedData.forEach((key, value) {
-        loadedData.add(Product(
-            id: key,
-            title: value['title'],
-            description: value['description'],
-            price: value['price'],
-            imageUrl: value['imageUrl'],
-            isfavorite: value['isfavorite']));
+        loadedData.add(
+          Product(
+              id: key,
+              title: value['title'],
+              description: value['description'],
+              price: value['price'],
+              imageUrl: value['imageUrl'],
+              isfavorite: favoriteData == null
+                  ? false
+                  : favoriteData[key]['isfavorite'] ?? false),
+        );
       });
 
       _items = loadedData;

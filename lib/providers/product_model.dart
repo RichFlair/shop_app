@@ -24,22 +24,25 @@ class Product with ChangeNotifier {
 
   Future<void> changeFavorite(
       String id, String? authToken, String? userId) async {
-    final url =
-        'https://shop-app-46835-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
-
     isfavorite = !isfavorite;
     notifyListeners();
-    final response = await http.patch(
-      Uri.parse(url),
-      body: json.encode({
-        'isfavorite': isfavorite,
-      }),
-    );
-    // print(json.decode(response.body)['isfavorite']);
-    if (response.statusCode >= 400) {
-      isfavorite = !isfavorite;
-      notifyListeners();
-      throw HttpException('Couldnt add to favorites');
+    try {
+      final url =
+          'https://shop-app-46835-default-rtdb.firebaseio.com/userFavorites/$userId/$id.json?auth=$authToken';
+      final response = await http.patch(
+        Uri.parse(url),
+        body: json.encode({
+          'isfavorite': isfavorite,
+        }),
+      );
+      // print(json.decode(response.body)['isfavorite']);
+      if (response.statusCode >= 400) {
+        isfavorite = !isfavorite;
+        notifyListeners();
+        throw HttpException('Couldnt add to favorites');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
