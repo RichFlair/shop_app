@@ -90,7 +90,6 @@ class Products with ChangeNotifier {
           'description': product.description,
           'price': product.price,
           'imageUrl': product.imageUrl,
-          'isfavorite': product.isfavorite,
         }),
       );
       final newProduct = Product(
@@ -122,14 +121,14 @@ class Products with ChangeNotifier {
       fetchedData.forEach((key, value) {
         loadedData.add(
           Product(
-              id: key,
-              title: value['title'],
-              description: value['description'],
-              price: value['price'],
-              imageUrl: value['imageUrl'],
-              isfavorite: favoriteData == null
-                  ? false
-                  : favoriteData[key]['isfavorite'] ?? false),
+            id: key,
+            title: value['title'],
+            description: value['description'],
+            price: value['price'],
+            imageUrl: value['imageUrl'],
+            isfavorite:
+                favoriteData == null ? false : favoriteData[key] ?? false,
+          ),
         );
       });
 

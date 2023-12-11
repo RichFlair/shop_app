@@ -41,7 +41,7 @@ class ProductItem extends StatelessWidget {
                     auth.userId,
                   )
                       .then((value) {
-                    if (productItem.isfavorite) {
+                    if (productItem.isfavorite!) {
                       scaffoldMessenger.hideCurrentSnackBar();
                       scaffoldMessenger.showSnackBar(
                         const SnackBar(
@@ -52,7 +52,7 @@ class ProductItem extends StatelessWidget {
                         ),
                       );
                     }
-                    if (!productItem.isfavorite) {
+                    if (!productItem.isfavorite!) {
                       scaffoldMessenger.hideCurrentSnackBar();
                       scaffoldMessenger.showSnackBar(
                         const SnackBar(
@@ -76,7 +76,7 @@ class ProductItem extends StatelessWidget {
                 }
               },
               icon: Icon(
-                product.isfavorite ? Icons.favorite : Icons.favorite_border,
+                product.isfavorite! ? Icons.favorite : Icons.favorite_border,
                 color: Theme.of(context).colorScheme.secondary,
               ),
             ),
