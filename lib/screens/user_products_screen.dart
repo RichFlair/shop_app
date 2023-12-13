@@ -17,7 +17,8 @@ class UserProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<Products>(context);
+    // final productData = Provider.of<Products>(context);
+    print('rebuild');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Products'),
@@ -31,21 +32,31 @@ class UserProductsScreen extends StatelessWidget {
         ],
       ),
       drawer: const DrawerWidget(),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
-        child: ListView.builder(
-            itemBuilder: (context, index) => Column(
-                  children: [
-                    UserProductsItem(
-                      id: productData.items[index].id,
-                      title: productData.items[index].title,
-                      imageUrl: productData.items[index].imageUrl,
+      body: FutureBuilder(
+          future: _refreshProducts(context),
+          builder: (context, snapshot) {
+            return snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProducts(context),
+                    child: Consumer<Products>(
+                      builder: (context, productData, _) => ListView.builder(
+                          itemBuilder: (context, index) => Column(
+                                children: [
+                                  UserProductsItem(
+                                    id: productData.items[index].id,
+                                    title: productData.items[index].title,
+                                    imageUrl: productData.items[index].imageUrl,
+                                  ),
+                                  const Divider(),
+                                ],
+                              ),
+                          itemCount: productData.items.length),
                     ),
-                    const Divider(),
-                  ],
-                ),
-            itemCount: productData.items.length),
-      ),
+                  );
+          }),
     );
   }
 }
