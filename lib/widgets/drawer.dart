@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth.dart';
 import '../screens/orders_screen.dart';
 import '../screens/user_products_screen.dart';
 
@@ -57,6 +59,16 @@ class DrawerWidget extends StatelessWidget {
             },
           ),
           const Divider(),
+          const Spacer(),
+          ListTile(
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text('Logout'),
+            trailing: const Icon(Icons.forward),
+            onTap: () {
+              Navigator.of(context).pop();
+              Provider.of<Auth>(context, listen: false).logout();
+            },
+          ),
         ],
       ),
     );
