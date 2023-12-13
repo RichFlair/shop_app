@@ -107,9 +107,11 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData([bool isUserProducts = false]) async {
+    var filterString =
+        isUserProducts ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        'https://shop-app-46835-default-rtdb.firebaseio.com/products.json?auth=$authToken';
+        'https://shop-app-46835-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString';
     try {
       final response = await http.get(Uri.parse(url));
       final fetchedData = json.decode(response.body) as Map<String, dynamic>;
