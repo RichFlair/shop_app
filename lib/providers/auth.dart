@@ -89,6 +89,7 @@ class Auth with ChangeNotifier {
     _userId = extractedUserData['userId'] as String;
     _expiryDate = expiryDate;
     notifyListeners();
+    _authoLogout();
     return true;
   }
 
