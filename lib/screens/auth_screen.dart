@@ -93,8 +93,6 @@ class AuthCard extends StatefulWidget {
 class _AuthCardState extends State<AuthCard> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  AnimationController? _controller;
-  Animation<Size>? _heightAnimation;
   var _authScreenStatus = AuthStatus.login;
   var _isVisible = false;
   var _isLoading = false;
