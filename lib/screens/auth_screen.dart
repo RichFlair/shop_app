@@ -90,7 +90,8 @@ class AuthCard extends StatefulWidget {
   State<AuthCard> createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   var _authScreenStatus = AuthStatus.login;
@@ -98,6 +99,18 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   AnimationController? _controller;
   Animation<Size>? _heightAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+  }
+
   Map<String, String> credentials = {
     'email': '',
     'password': '',
