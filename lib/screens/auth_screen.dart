@@ -96,6 +96,8 @@ class _AuthCardState extends State<AuthCard> {
   var _authScreenStatus = AuthStatus.login;
   var _isVisible = false;
   var _isLoading = false;
+  AnimationController? _controller;
+  Animation<Size>? _heightAnimation;
   Map<String, String> credentials = {
     'email': '',
     'password': '',
