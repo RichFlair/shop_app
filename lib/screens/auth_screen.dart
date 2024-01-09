@@ -94,7 +94,7 @@ class _AuthCardState extends State<AuthCard>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
-  var _authScreenStatus = AuthStatus.login;
+  AuthStatus _authScreenStatus = AuthStatus.login;
   var _isVisible = false;
   var _isLoading = false;
   AnimationController? _controller;
@@ -199,11 +199,19 @@ class _AuthCardState extends State<AuthCard>
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     return Card(
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(10.0),
+      // ),
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 40),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        height: _authScreenStatus == AuthStatus.signin ? 320 : 260,
+        constraints: BoxConstraints(
+            minHeight: _authScreenStatus == AuthStatus.signin ? 320 : 260),
+        padding: const EdgeInsets.all(16),
+        width: deviceSize.width * 0.8,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
