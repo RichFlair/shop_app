@@ -333,14 +333,14 @@ class _AuthCardState extends State<AuthCard>
                 onPressed: () {
                   if (_authScreenStatus == AuthStatus.login) {
                     setState(() {
-                      _controller!.forward();
                       _authScreenStatus = AuthStatus.signin;
                     });
+                    _controller!.forward();
                   } else {
                     setState(() {
                       _authScreenStatus = AuthStatus.login;
-                      _controller!.reverse();
                     });
+                    _controller!.reverse();
                   }
                 },
                 child: _authScreenStatus == AuthStatus.login
