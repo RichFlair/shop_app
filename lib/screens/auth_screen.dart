@@ -110,8 +110,8 @@ class _AuthCardState extends State<AuthCard>
       ),
     );
     _heightAnimation = Tween<Size>(
-      begin: const Size(double.infinity, 350),
-      end: const Size(double.infinity, 280),
+      begin: const Size(double.infinity, 280),
+      end: const Size(double.infinity, 350),
     ).animate(
       CurvedAnimation(
         parent: _controller!,
