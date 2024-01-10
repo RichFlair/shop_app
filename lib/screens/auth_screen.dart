@@ -118,6 +118,15 @@ class _AuthCardState extends State<AuthCard>
         curve: Curves.fastOutSlowIn,
       ),
     );
+    _heightAnimation!.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller!.dispose();
   }
 
   Map<String, String> credentials = {
@@ -324,11 +333,13 @@ class _AuthCardState extends State<AuthCard>
                 onPressed: () {
                   if (_authScreenStatus == AuthStatus.login) {
                     setState(() {
+                      _controller!.forward();
                       _authScreenStatus = AuthStatus.signin;
                     });
                   } else {
                     setState(() {
                       _authScreenStatus = AuthStatus.login;
+                      _controller!.reverse();
                     });
                   }
                 },
