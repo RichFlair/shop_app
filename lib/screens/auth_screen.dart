@@ -212,9 +212,11 @@ class _AuthCardState extends State<AuthCard>
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 40),
       child: Container(
-        height: _authScreenStatus == AuthStatus.signin ? 350 : 280,
+        // height: _authScreenStatus == AuthStatus.signin ? 350 : 280,
+        height: _heightAnimation!.value.height,
         constraints: BoxConstraints(
-            minHeight: _authScreenStatus == AuthStatus.signin ? 350 : 280),
+          minHeight: _heightAnimation!.value.height,
+        ),
         padding: const EdgeInsets.all(16),
         width: deviceSize.width * 0.8,
         child: Form(
