@@ -211,7 +211,19 @@ class _AuthCardState extends State<AuthCard>
     });
   }
 
-  void _switchAuthScreenMode() {}
+  void _switchAuthScreenMode() {
+    if (_authScreenStatus == AuthStatus.login) {
+      setState(() {
+        _authScreenStatus = AuthStatus.signin;
+      });
+      _controller!.forward();
+    } else {
+      setState(() {
+        _authScreenStatus = AuthStatus.login;
+      });
+      _controller!.reverse();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
