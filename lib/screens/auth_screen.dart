@@ -72,7 +72,10 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const AuthCard()
+                  Flexible(
+                    flex: screenSize.width > 600 ? 2 : 1,
+                    child: const AuthCard(),
+                  )
                 ],
               ),
             ),
