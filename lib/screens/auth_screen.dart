@@ -211,6 +211,8 @@ class _AuthCardState extends State<AuthCard>
     });
   }
 
+  void _switchAuthScreenMode() {}
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -330,19 +332,7 @@ class _AuthCardState extends State<AuthCard>
               ),
               // button to switch between login and signup screen
               TextButton(
-                onPressed: () {
-                  if (_authScreenStatus == AuthStatus.login) {
-                    setState(() {
-                      _authScreenStatus = AuthStatus.signin;
-                    });
-                    _controller!.forward();
-                  } else {
-                    setState(() {
-                      _authScreenStatus = AuthStatus.login;
-                    });
-                    _controller!.reverse();
-                  }
-                },
+                onPressed: _switchAuthScreenMode,
                 child: _authScreenStatus == AuthStatus.login
                     ? const Text('Not registered? SIGNUP')
                     : const Text('Already registered? LOGIN'),
