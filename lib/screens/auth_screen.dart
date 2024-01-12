@@ -247,112 +247,114 @@ class _AuthCardState extends State<AuthCard>
         width: deviceSize.width * 0.8,
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              // e-mail textfield
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'E-Mail'),
-                keyboardType: TextInputType.emailAddress,
-                onSaved: (newValue) {
-                  credentials['email'] = newValue!;
-                },
-                validator: (value) {
-                  if (!value!.contains('@')) {
-                    return 'Invalid email type';
-                  }
-                  return null;
-                },
-              ),
-              // password textfield
-              TextFormField(
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isVisible = !_isVisible;
-                      });
-                    },
-                    icon: _isVisible
-                        ? const Icon(Icons.visibility_off)
-                        : const Icon(Icons.visibility),
-                  ),
-                  labelText: 'Password',
-                ),
-                obscureText: _isVisible ? false : true,
-                autocorrect: false,
-                controller: _passwordController,
-                onSaved: (newValue) {
-                  credentials['password'] = newValue!;
-                },
-                validator: (value) {
-                  RegExp regexNumber = RegExp(r'^(?=.*\d).+$');
-                  RegExp regexSpecialChar =
-                      RegExp(r'^(?=.*[!@#$%^&*(),./?;:<>|{}]).+$');
-                  if (value!.length < 8) {
-                    return 'Password must be 8 characters long';
-                  }
-                  if (!regexNumber.hasMatch(value)) {
-                    return 'Password must have at least one number';
-                  }
-                  if (!regexSpecialChar.hasMatch(value)) {
-                    return 'Password must have at least one special character';
-                  }
-                  return null;
-                },
-              ),
-              // confirm password textfield
-              if (_authScreenStatus == AuthStatus.signin)
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // e-mail textfield
                 TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm Password',
-                  ),
-                  obscureText: _isVisible ? false : true,
-                  autocorrect: false,
-                  // onFieldSubmitted: (value) => _saveForm(),
+                  decoration: const InputDecoration(labelText: 'E-Mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  onSaved: (newValue) {
+                    credentials['email'] = newValue!;
+                  },
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter Password again';
-                    }
-                    if (value != _passwordController.text) {
-                      return 'Password does not match!';
+                    if (!value!.contains('@')) {
+                      return 'Invalid email type';
                     }
                     return null;
                   },
                 ),
-              const SizedBox(
-                height: 20,
-              ),
-              // Login or Signup button
-              _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  // Login / SignUp Button
-                  : ElevatedButton(
+                // password textfield
+                TextFormField(
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
                       onPressed: () {
-                        _submit();
+                        setState(() {
+                          _isVisible = !_isVisible;
+                        });
                       },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Theme.of(context).colorScheme.primary),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: _authScreenStatus == AuthStatus.login
-                          ? const Text('LOGIN')
-                          : const Text('SIGN-UP'),
+                      icon: _isVisible
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                     ),
-              const SizedBox(
-                height: 3,
-              ),
-              // button to switch between login and signup screen
-              TextButton(
-                onPressed: _switchAuthScreenMode,
-                child: _authScreenStatus == AuthStatus.login
-                    ? const Text('Not registered? SIGNUP')
-                    : const Text('Already registered? LOGIN'),
-              ),
-            ],
+                    labelText: 'Password',
+                  ),
+                  obscureText: _isVisible ? false : true,
+                  autocorrect: false,
+                  controller: _passwordController,
+                  onSaved: (newValue) {
+                    credentials['password'] = newValue!;
+                  },
+                  validator: (value) {
+                    RegExp regexNumber = RegExp(r'^(?=.*\d).+$');
+                    RegExp regexSpecialChar =
+                        RegExp(r'^(?=.*[!@#$%^&*(),./?;:<>|{}]).+$');
+                    if (value!.length < 8) {
+                      return 'Password must be 8 characters long';
+                    }
+                    if (!regexNumber.hasMatch(value)) {
+                      return 'Password must have at least one number';
+                    }
+                    if (!regexSpecialChar.hasMatch(value)) {
+                      return 'Password must have at least one special character';
+                    }
+                    return null;
+                  },
+                ),
+                // confirm password textfield
+                if (_authScreenStatus == AuthStatus.signin)
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm Password',
+                    ),
+                    obscureText: _isVisible ? false : true,
+                    autocorrect: false,
+                    // onFieldSubmitted: (value) => _saveForm(),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter Password again';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Password does not match!';
+                      }
+                      return null;
+                    },
+                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+                // Login or Signup button
+                _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    // Login / SignUp Button
+                    : ElevatedButton(
+                        onPressed: () {
+                          _submit();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Theme.of(context).colorScheme.primary),
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.white),
+                        ),
+                        child: _authScreenStatus == AuthStatus.login
+                            ? const Text('LOGIN')
+                            : const Text('SIGN-UP'),
+                      ),
+                const SizedBox(
+                  height: 3,
+                ),
+                // button to switch between login and signup screen
+                TextButton(
+                  onPressed: _switchAuthScreenMode,
+                  child: _authScreenStatus == AuthStatus.login
+                      ? const Text('Not registered? SIGNUP')
+                      : const Text('Already registered? LOGIN'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
