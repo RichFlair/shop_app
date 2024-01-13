@@ -237,14 +237,18 @@ class _AuthCardState extends State<AuthCard>
       // ),
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 40),
-      child: Container(
-        // height: _authScreenStatus == AuthStatus.signin ? 350 : 280,
-        height: _heightAnimation!.value.height,
-        constraints: BoxConstraints(
-          minHeight: _heightAnimation!.value.height,
+      child: AnimatedBuilder(
+        animation: _heightAnimation!,
+        builder: (ctx, ch) => Container(
+          // height: _authScreenStatus == AuthStatus.signin ? 350 : 280,
+          height: _heightAnimation!.value.height,
+          constraints: BoxConstraints(
+            minHeight: _heightAnimation!.value.height,
+          ),
+          padding: const EdgeInsets.all(16),
+          width: deviceSize.width * 0.8,
+          child: ch,
         ),
-        padding: const EdgeInsets.all(16),
-        width: deviceSize.width * 0.8,
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
