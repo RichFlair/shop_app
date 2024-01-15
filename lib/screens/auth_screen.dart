@@ -100,37 +100,37 @@ class _AuthCardState extends State<AuthCard>
   AuthStatus _authScreenStatus = AuthStatus.login;
   var _isVisible = false;
   var _isLoading = false;
-  // AnimationController? _controller;
-  // Animation<Size>? _heightAnimation;
+  AnimationController? _controller;
+  Animation<Size>? _heightAnimation;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(
-  //       milliseconds: 300,
-  //     ),
-  //   );
-  //   _heightAnimation = Tween<Size>(
-  //     begin: const Size(double.infinity, 280),
-  //     end: const Size(double.infinity, 350),
-  //   ).animate(
-  //     CurvedAnimation(
-  //       parent: _controller!,
-  //       curve: Curves.fastOutSlowIn,
-  //     ),
-  //   );
-  //   _heightAnimation!.addListener(() {
-  //     setState(() {});
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+    _heightAnimation = Tween<Size>(
+      begin: const Size(double.infinity, 280),
+      end: const Size(double.infinity, 350),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.fastOutSlowIn,
+      ),
+    );
+    _heightAnimation!.addListener(() {
+      setState(() {});
+    });
+  }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _controller!.dispose();
-  // }
+  @override
+  void dispose() {
+    super.dispose();
+    _controller!.dispose();
+  }
 
   Map<String, String> credentials = {
     'email': '',
@@ -219,12 +219,12 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authScreenStatus = AuthStatus.signin;
       });
-      // _controller!.forward();
+      _controller!.forward();
     } else {
       setState(() {
         _authScreenStatus = AuthStatus.login;
       });
-      // _controller!.reverse();
+      _controller!.reverse();
     }
   }
 
