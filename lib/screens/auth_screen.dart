@@ -102,6 +102,7 @@ class _AuthCardState extends State<AuthCard>
   var _isLoading = false;
   AnimationController? _controller;
   Animation<Size>? _heightAnimation;
+  Animation<double>? _opacityAnimation;
 
   @override
   void initState() {
@@ -120,6 +121,9 @@ class _AuthCardState extends State<AuthCard>
         parent: _controller!,
         curve: Curves.fastOutSlowIn,
       ),
+    );
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller!, curve: Curves.easeIn),
     );
     _heightAnimation!.addListener(() {
       setState(() {});
@@ -304,8 +308,10 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 // confirm password textfield
-                if (_authScreenStatus == AuthStatus.signin)
-                  TextFormField(
+                // if (_authScreenStatus == AuthStatus.signin)
+                FadeTransition(
+                  opacity: _opacityAnimation!,
+                  child: TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Confirm Password',
                     ),
@@ -322,6 +328,7 @@ class _AuthCardState extends State<AuthCard>
                       return null;
                     },
                   ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
