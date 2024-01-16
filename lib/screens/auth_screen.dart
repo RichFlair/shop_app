@@ -101,7 +101,7 @@ class _AuthCardState extends State<AuthCard>
   var _isVisible = false;
   var _isLoading = false;
   AnimationController? _controller;
-  Animation<Size>? _heightAnimation;
+  Animation<Offset>? _slideAnimation;
   Animation<double>? _opacityAnimation;
 
   @override
@@ -113,9 +113,9 @@ class _AuthCardState extends State<AuthCard>
         milliseconds: 300,
       ),
     );
-    _heightAnimation = Tween<Size>(
-      begin: const Size(double.infinity, 280),
-      end: const Size(double.infinity, 350),
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1.5),
+      end: const Offset(0, 0),
     ).animate(
       CurvedAnimation(
         parent: _controller!,
@@ -125,9 +125,6 @@ class _AuthCardState extends State<AuthCard>
     _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller!, curve: Curves.easeIn),
     );
-    _heightAnimation!.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -316,24 +313,28 @@ class _AuthCardState extends State<AuthCard>
                       maxHeight:
                           _authScreenStatus == AuthStatus.signin ? 120 : 0),
                   duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeIn,
                   child: FadeTransition(
                     opacity: _opacityAnimation!,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Confirm Password',
+                    child: SlideTransition(
+                      position: _slideAnimation!,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          labelText: 'Confirm Password',
+                        ),
+                        obscureText: _isVisible ? false : true,
+                        autocorrect: false,
+                        // onFieldSubmitted: (value) => _saveForm(),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Enter Password again';
+                          }
+                          if (value != _passwordController.text) {
+                            return 'Password does not match!';
+                          }
+                          return null;
+                        },
                       ),
-                      obscureText: _isVisible ? false : true,
-                      autocorrect: false,
-                      // onFieldSubmitted: (value) => _saveForm(),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Enter Password again';
-                        }
-                        if (value != _passwordController.text) {
-                          return 'Password does not match!';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ),
