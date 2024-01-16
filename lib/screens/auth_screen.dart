@@ -305,38 +305,40 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 // confirm password textfield
-                // if (_authScreenStatus == AuthStatus.signin)
-                AnimatedContainer(
-                  constraints: BoxConstraints(
-                    minHeight: _authScreenStatus == AuthStatus.signin ? 60 : 0,
-                    maxHeight: _authScreenStatus == AuthStatus.signin ? 120 : 0,
-                  ),
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
-                  child: FadeTransition(
-                    opacity: _opacityAnimation!,
-                    child: SlideTransition(
-                      position: _slideAnimation!,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Confirm Password',
+                if (_authScreenStatus == AuthStatus.signin)
+                  AnimatedContainer(
+                    constraints: BoxConstraints(
+                      minHeight:
+                          _authScreenStatus == AuthStatus.signin ? 60 : 0,
+                      maxHeight:
+                          _authScreenStatus == AuthStatus.signin ? 120 : 0,
+                    ),
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn,
+                    child: FadeTransition(
+                      opacity: _opacityAnimation!,
+                      child: SlideTransition(
+                        position: _slideAnimation!,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Confirm Password',
+                          ),
+                          obscureText: _isVisible ? false : true,
+                          autocorrect: false,
+                          // onFieldSubmitted: (value) => _saveForm(),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Enter Password again';
+                            }
+                            if (value != _passwordController.text) {
+                              return 'Password does not match!';
+                            }
+                            return null;
+                          },
                         ),
-                        obscureText: _isVisible ? false : true,
-                        autocorrect: false,
-                        // onFieldSubmitted: (value) => _saveForm(),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter Password again';
-                          }
-                          if (value != _passwordController.text) {
-                            return 'Password does not match!';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                   ),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
