@@ -308,10 +308,9 @@ class _AuthCardState extends State<AuthCard>
                 // if (_authScreenStatus == AuthStatus.signin)
                 AnimatedContainer(
                   constraints: BoxConstraints(
-                      minHeight:
-                          _authScreenStatus == AuthStatus.signin ? 60 : 0,
-                      maxHeight:
-                          _authScreenStatus == AuthStatus.signin ? 120 : 0),
+                    minHeight: _authScreenStatus == AuthStatus.signin ? 60 : 0,
+                    maxHeight: _authScreenStatus == AuthStatus.signin ? 120 : 0,
+                  ),
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeIn,
                   child: FadeTransition(
