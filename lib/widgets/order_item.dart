@@ -24,7 +24,8 @@ class _OrderItemState extends State<OrderItem> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: _expanded ? min(widget.noOfOrderItems * 20 + 200, 200) : 95,
+      height:
+          _expanded ? min(widget.order.products.length * 20 + 200, 200) : 95,
       child: Card(
         margin: const EdgeInsets.all(10),
         child: Column(
@@ -45,40 +46,40 @@ class _OrderItemState extends State<OrderItem> {
                     : const Icon(Icons.expand_more),
               ),
             ),
-            if (_expanded)
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 400),
-                // height: _expanded ? widget.noOfOrderItems * 10 : 0,
-                constraints: BoxConstraints(
-                    minHeight: _expanded ? widget.noOfOrderItems * 10 : 0),
-                child: SizedBox(
-                  height: min(widget.order.products.length * 10.0 + 100, 100),
-                  child: ListView(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      children: widget.order.products.map((e) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              e.title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '${e.quantiy}  x  ${e.price}',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        );
-                      }).toList()),
-                ),
-              ),
+            // if (_expanded)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+              height: _expanded
+                  ? min(widget.order.products.length * 20.0 + 10, 100)
+                  : 0,
+              // constraints: BoxConstraints(
+              //     minHeight: _expanded ? widget.noOfOrderItems * 10 : 0),
+              child: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  children: widget.order.products.map((e) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          e.title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${e.quantiy}  x  ${e.price}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList()),
+            ),
           ],
         ),
       ),
