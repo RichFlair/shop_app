@@ -53,8 +53,6 @@ class _OrderItemState extends State<OrderItem> {
               height: _expanded
                   ? min(widget.order.products.length * 20.0 + 100, 100)
                   : 0,
-              // constraints: BoxConstraints(
-              //     minHeight: _expanded ? widget.noOfOrderItems * 10 : 0),
               child: ListView(
                   children: widget.order.products.map((e) {
                 return Row(
